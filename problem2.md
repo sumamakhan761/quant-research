@@ -40,39 +40,10 @@ This is a constrained convex optimization problem when $\delta \geq 1$. However,
 
 For the special case where $\delta > 0$, we can derive an analytical solution using Lagrange multipliers.
 
-The Lagrangian for our problem is:
-
-$$L(\mathbf{x}, \lambda) = \sum_{i=1}^{N} \eta_{t_i} \cdot x_i^\delta - \lambda \left(\sum_{i=1}^{N} x_i - S\right)$$
-
-Taking partial derivatives and setting them to zero:
-
-$$\frac{\partial L}{\partial x_i} = \delta \cdot \eta_{t_i} \cdot x_i^{\delta-1} - \lambda = 0$$
-
-Solving for $x_i$:
-
-$$x_i = \left(\frac{\lambda}{\delta \cdot \eta_{t_i}}\right)^{\frac{1}{\delta-1}}$$
-
-Using the constraint $\sum_{i=1}^{N} x_i = S$, we can determine $\lambda$:
-
-$$\sum_{i=1}^{N} \left(\frac{\lambda}{\delta \cdot \eta_{t_i}}\right)^{\frac{1}{\delta-1}} = S$$
-
-For the special case where $\delta = 0.5$ (square-root impact):
-
-$$x_i = \left(\frac{\lambda}{0.5 \cdot \eta_{t_i}}\right)^{-2} = \frac{0.25 \cdot \eta_{t_i}^2}{\lambda^2}$$
-
-And the constraint becomes:
-
-$$\sum_{i=1}^{N} \frac{0.25 \cdot \eta_{t_i}^2}{\lambda^2} = S$$
-
-Solving for $\lambda^2$:
-
-$$\lambda^2 = \frac{0.25 \cdot \sum_{i=1}^{N} \eta_{t_i}^2}{S}$$
-
-Therefore:
-
 $$x_i = \frac{S \cdot \eta_{t_i}^2}{\sum_{j=1}^{N} \eta_{t_j}^2}$$
 
 This is the optimal allocation when $\delta = 0.5$, assuming all $x_i \geq 0$ (which is satisfied since $\eta_{t_i} > 0$).
+
 
 ## Numerical Solution: Projected Gradient Descent Algorithm
 
@@ -122,22 +93,6 @@ Here's a step-by-step algorithm to determine the optimal execution quantities $x
 5. **Adaptation** (optional):
    - As the day progresses, update impact estimates based on observed market conditions
    - Re-optimize the remaining execution schedule accordingly
-
-## Extensions and Considerations
-
-1. **Risk Aversion**: Incorporate risk into the objective function using the Almgren-Chriss framework:
-   $$\min_{\mathbf{x}} \sum_{i=1}^{N} \eta_{t_i} \cdot x_i^\delta + \lambda \cdot \text{Risk}(\mathbf{x})$$
-   where $\lambda$ is the risk aversion parameter and Risk(x) captures price uncertainty
-
-2. **Permanent Impact**: Consider both temporary and permanent impact:
-   $$\min_{\mathbf{x}} \sum_{i=1}^{N} \eta_{t_i} \cdot x_i^\delta + \sum_{i=1}^{N} \gamma_{t_i} \cdot x_i \cdot \sum_{j=i}^{N} x_j$$
-   where $\gamma_{t_i}$ is the permanent impact coefficient
-
-3. **Adaptive Execution**: Update the impact model parameters in real-time as market conditions evolve
-
-4. **Multi-Asset Execution**: Extend to portfolio trading by considering correlations between assets
-
-5. **Integer Constraints**: Modify the algorithm to handle minimum lot sizes or other practical constraints
 
 ## Conclusion
 
