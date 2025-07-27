@@ -69,4 +69,3 @@ While linear models of temporary impact ($g_t(x) = \beta_t x$) are appealing for
 
 This square-root model not only provides a better fit to the empirical data but also aligns with theoretical models of market microstructure and the extensive literature on market impact. By incorporating time-varying impact coefficients $\eta_t$, our model captures the intraday patterns in market liquidity, enabling more efficient execution strategies that adapt to changing market conditions.
 
-The optimization results demonstrate that execution strategies based on this model can significantly reduce transaction costs compared to naive approaches, highlighting the practical importance of accurate impact modeling in algorithmic trading.
